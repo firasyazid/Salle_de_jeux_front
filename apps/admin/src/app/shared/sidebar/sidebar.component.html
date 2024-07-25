@@ -1,0 +1,33 @@
+<div class="admin-sidebar">
+  <div class="logo">
+    <img src="/assets/images/GOODGAMES.jpg" alt="" style="width: 200px; height: auto; border: 1px solid #0f0e0e; border-radius: 10px;box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);">
+  </div>
+  <div class="links">
+    
+    <ul>
+      <li *ngIf="isAdmin">
+        <a routerLink="/dashboard"><i class="pi pi-home"></i> Dashboard</a>
+      </li>
+      <li *ngIf="isAdmin">
+        <a routerLink="/stat"><i class="pi pi-chart-bar"></i> Statistics</a>
+      </li>
+       <li>
+        <a routerLink="/sesssion_user"><i class="pi pi-users"></i> Session_user</a>
+      </li >       
+      <li  *ngIf="isAdmin">
+        <a routerLink="/orders"><i class="pi pi-clock"></i> Sessions</a>
+      </li>
+      <li  *ngIf="isAdmin">
+        <a routerLink="/month"><i class="pi pi-users"></i>Monthly Sum</a>
+      </li>
+      <li  *ngIf="isAdmin">
+        <a routerLink="/users"><i class="pi pi-users"></i> Users</a>
+      </li>
+
+
+      <li class="logout">
+        <a><i class="pi pi-sign-out" (click)="logoutUser()"></i> Logout</a>
+      </li>
+    </ul>
+  </div>
+</div>

@@ -1,0 +1,310 @@
+<p-toast></p-toast>
+<div class="admin-page">
+  <p-card header="Sessions" subheader="List of all Sessions">
+    <div class="p-grid"></div>
+    <div class="p-col-12">
+      <p-toolbar>
+        <div class="p-toolbar-group-left">
+          <p-button
+            label="New"
+            icon="pi pi-plus"
+            (click)="displayDialog = true"
+          ></p-button>
+        </div>
+      </p-toolbar>
+    </div>
+
+    <p-dialog
+      header="Add Session"
+      [(visible)]="displayDialog"
+      [responsive]="true"
+      [modal]="isModal"
+      [style]="{ width: '50%', height: '40%' }"
+    >
+      <form #addClaimForm="ngForm" (ngSubmit)="_addSession(newSession)">
+        <div class="p-fluid">
+          <div class="p-field">
+            <label for="description">User Name</label>
+            <input
+              id="description"
+              type="text"
+              pInputText
+              placeholder="Enter Name"
+              name="description"
+              [(ngModel)]="newSession.nameUser"
+              required
+            />
+          </div>
+          <div class="p-field">
+            <label for="title">Fond Initial</label>
+            <input
+              id="title"
+              type="text"
+              pInputText
+              placeholder="Enter fond"
+              name="title"
+              [(ngModel)]="newSession.fondInitial"
+              required
+            />
+          </div>
+        </div>
+        <p-footer style="margin-top: 10px">
+          <button
+            type="submit"
+            pButton
+            label="Save"
+            style="margin-right: 10px"
+          ></button>
+          <button
+            type="button"
+            pButton
+            label="Cancel"
+            (click)="displayDialog = false"
+          ></button>
+        </p-footer>
+      </form>
+    </p-dialog>
+
+    <div class="p-grid">
+      <div class="p-col-12">
+        <p-table
+          [paginator]="true"
+          [rows]="3"
+          [value]="lastSession"
+          styleClass="p-datatable-gridlines"
+          [globalFilterFields]="['name']"
+        >
+          <ng-template pTemplate="header">
+            <tr>
+              <th pSortableColumn="name" style="color: #0093e9">
+                Name <p-sortIcon field="Name"></p-sortIcon>
+              </th>
+              <th pSortableColumn="Date" style="color: #0093e9">
+                Date Session <p-sortIcon field="date"></p-sortIcon>
+              </th>
+              <th pSortableColumn="Fond Initial" style="color: #0093e9">
+                Fond Initial <p-sortIcon field="Fond Initial"></p-sortIcon>
+              </th>
+              <th pSortableColumn="Fond Initial" style="color: #0093e9">
+                Nombre d'heure <p-sortIcon field="Fond Initial"></p-sortIcon>
+              </th>
+              <th pSortableColumn="Somme Compteur" style="color: #0093e9">
+                Somme Compteur <p-sortIcon field="Somme Compteur"></p-sortIcon>
+              </th>
+              <th pSortableColumn="Somme Compteur" style="color: #0093e9">
+                Somme <p-sortIcon field="Somme Compteur"></p-sortIcon>
+              </th>
+
+              <th pSortableColumn="Somme Compteur" style="color: #0093e9">
+                Fond Final <p-sortIcon field="Somme Compteur"></p-sortIcon>
+              </th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-session>
+            <tr>
+              <td>
+                <span style="font-weight: bold">{{ session.nameUser }}</span>
+              </td>
+              <td>
+                <span style="font-weight: bold">{{
+                  session.dateSession | date: 'd MMMM yyyy HH:mm'
+                }}</span>
+              </td>
+              <td>
+                <span style="font-weight: bold"
+                  >{{ session.fondInitial }} dt
+                </span>
+              </td>
+              <td>
+                <span style="font-weight: bold">{{ session.Nbheure }}</span>
+              </td>
+              <td>
+                <span style="font-weight: bold">{{
+                  session.SommeCopmteur
+                }}</span>
+              </td>
+              <td>
+                <span style="font-weight: bold">{{ session.Somme }} dt</span>
+              </td>
+              <td>
+                <span style="font-weight: bold"
+                  >{{ session.fondFinal }} dt</span
+                >
+              </td>
+
+              <td>
+                <p-button
+                  styleClass="p-button-raised p-button-warning"
+                  label="Compteur"
+                  icon="pi pi-pencil"
+                  (click)="openUpdat2eDialog(session)"
+                ></p-button>
+                <p-button
+                  styleClass="p-button-raised p-button-info"
+                  label="Update"
+                  icon="pi pi-pencil"
+                  (click)="openUpdateDialog(session)"
+                ></p-button>
+                <i
+                  class="pi pi-spin pi-spinner"
+                  style="font-size: 2rem; margin-left: 5px"
+                ></i>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+
+    <p-dialog
+      header="Update Session"
+      [(visible)]="displayDialogUpdate"
+      [responsive]="true"
+      [modal]="isModal"
+      [style]="{ width: '50%', height: '40%' }"
+    >
+      <form
+        #updateSessionForm="ngForm"
+        (ngSubmit)="_updateSession(selectedSession)"
+      >
+        <div class="p-fluid">
+          <div class="p-field">
+            <label for="fondInitial">Fond Initial</label>
+            <input
+              id="fondInitial"
+              type="text"
+              pInputText
+              placeholder="Enter Fond Initial"
+              name="fondInitial"
+              [(ngModel)]="selectedSession.fondInitial"
+              required
+            />
+          </div>
+          <div class="p-field">
+            <label for="fondFinal">Fond Final</label>
+            <input
+              id="fondFinal"
+              type="text"
+              pInputText
+              placeholder="Enter Fond Final"
+              name="fondFinal"
+              [(ngModel)]="selectedSession.fondFinal"
+              required
+            />
+          </div>
+          <div class="p-field">
+            <label for="Nbheure">Number of Hours</label>
+            <input
+              id="Nbheure"
+              type="text"
+              pInputText
+              placeholder="Enter Number of Hours"
+              name="Nbheure"
+              [(ngModel)]="selectedSession.Nbheure"
+              required
+            />
+          </div>
+        </div>
+        <p-footer>
+          <button
+            type="submit"
+            pButton
+            label="Save"
+            style="margin-right: 10px"
+          ></button>
+          <button
+            type="button"
+            pButton
+            label="Cancel"
+            (click)="displayDialogUpdate = false"
+          ></button>
+        </p-footer>
+      </form>
+    </p-dialog>
+
+    <p-dialog
+      header="Update Compteur"
+      [(visible)]="displayDialogCompteur"
+      [responsive]="true"
+      [modal]="isModal"
+      [style]="{ width: '80%', height: '80%' }"
+    >
+      <form
+        #updateSessionForm="ngForm"
+        (ngSubmit)="_updateSession(selectedSession)"
+      >
+        <div class="p-col-12">
+          <p-table
+            [value]="lastSession"
+            [paginator]="true"
+            [rows]="5"
+            styleClass="p-datatable-gridlines"
+          >
+            <ng-template pTemplate="header">
+              <tr>
+                <th pSortableColumn="name" style="color: #0093e9">
+                  Poste Number <p-sortIcon field="user"></p-sortIcon>
+                </th>
+                <th pSortableColumn="totalPrice" style="color: #0093e9">
+                  Compteur <p-sortIcon field="totalPrice"></p-sortIcon>
+                </th>
+                <th pSortableColumn="totalPrice" style="color: #0093e9">
+                  Compteur Traçable <p-sortIcon field="totalPrice"></p-sortIcon>
+                </th>
+              </tr>
+            </ng-template>
+
+            <ng-template pTemplate="body" let-sess>
+              <tr *ngFor="let poste of sess.postes"></tr>
+              <tr *ngFor="let poste of sess.postes">
+                <td>
+                  <span style="font-weight: bold">
+                    Poste Numero : {{ poste.name }}</span
+                  >
+                </td>
+                <td>
+                  <span style="font-weight: bold; width: 50px">{{
+                    poste.compteur + poste.CompteurR
+                  }}</span>
+                </td>
+                <td>
+                  <span style="font-weight: bold; width: 50px">{{
+                    poste.CompteurD
+                  }}</span>
+                </td>
+
+                <td>
+                  <p-button
+                    label="2"
+                    styleClass="p-button-raised"
+                    (click)="incrementCompteur(selectedSession.id, poste.name)"
+                  ></p-button>
+                  <p-button
+                    label="4"
+                    styleClass="p-button-raised"
+                    (click)="incrementCompteur2(selectedSession.id, poste.name)"
+                  ></p-button>
+                  <p-button
+                    icon="pi pi-times"
+                    styleClass="p-button-danger"
+                    (click)="decrementCompteur(selectedSession.id, poste.name)"
+                  ></p-button>
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </div>
+
+        <p-footer>
+          <button
+            type="button"
+            pButton
+            label="Exit"
+            style="margin: 10px auto 0; display: block; width: 120px"
+            (click)="displayDialogCompteur = false"
+          ></button>
+        </p-footer>
+      </form>
+    </p-dialog>
+  </p-card>
+</div>

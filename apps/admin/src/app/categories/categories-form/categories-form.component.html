@@ -1,0 +1,60 @@
+<p-toast></p-toast>
+<div class="admin-page">
+
+    <p-card [header]="editmode ? 'Edit Postes':'Edit Compteurs' " subheader="You Can Edit  Postes">
+        <div class="p-grid p-mb-10">
+            <div class="p-col-12">
+
+                <p-toolbar>
+                    <div class="p-toolbar-group-left">
+
+                    </div>
+
+                    <div class="p-toolbar-group-right">
+ 
+
+                        <p-button styleClass="p-button-secondary" label="Return" icon="pi pi-arrow-circle-left"
+                        (click)="onCancle()" ></p-button>
+                    </div>
+
+
+                </p-toolbar>
+            </div>
+        </div>
+        
+        <div class="p-grid">
+            <div class="p-col-12">
+              <p-table [value]="" styleClass="p-datatable-gridlines">
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th pSortableColumn="name" style="color: #0093e9;">Poste Numero <p-sortIcon field="name"></p-sortIcon></th>
+                    <th style="color: #0093e9;">Compteur</th>
+                     
+      
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-user>
+                  <tr>
+                    <td> </td>
+                    <td>   </td>
+       
+                      <td><span style="font-weight: bold;"> </span>             
+                        <td>
+      
+                     
+                      <button
+                       pButton pRipple label="Update"
+                      icon="pi pi-pencil"
+                      ></button>
+                       <i class="pi pi-spin pi-spinner" style="font-size: 2rem; margin-left: 5px;" ></i>
+      
+                    </td>
+                  </tr>
+                </ng-template>
+              </p-table>
+            </div>
+          </div>
+
+         
+
+    </p-card>

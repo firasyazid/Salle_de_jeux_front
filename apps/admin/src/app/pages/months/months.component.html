@@ -1,0 +1,29 @@
+<p-toast></p-toast>
+<div class="admin-page">
+  <p-card header="Months Sum" subheader="List of all Months Sum">
+    <div class="p-grid">
+      
+    </div>
+    <div class="p-grid">
+      <div class="p-col-12">
+        <p-table [value]="monthlySum"
+            styleClass="p-datatable-gridlines">
+          <ng-template pTemplate="header">
+            <tr>
+              <th pSortableColumn="name" style="color: #0093e9;">Month <p-sortIcon field="name"></p-sortIcon></th>
+              <th style="color: #0093e9;">Somme</th>
+              </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-monthSum>
+            <tr>
+              <td><span style="font-weight: bold;">{{ monthSum.month }}</span> </td>
+                 <td><span style="font-weight: bold;"> {{ monthSum.sum }}</span>             
+                 
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+  </p-card>
+</div>
